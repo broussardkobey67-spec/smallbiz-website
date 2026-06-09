@@ -1,13 +1,17 @@
-# Publishes the static site to GitLab Pages on every push to the default branch.
-# Live URL: https://broussardkobey67.gitlab.io/smallbiz-website/
-pages:
-  stage: deploy
+# Continuous integration for the static marketing site.
+# Validates structure and core markup on every push so `main` stays deployable.
+stages:
+  - validate
+
+validate-site:
+  stage: validate
   image: alpine:latest
   script:
-    - mkdir -p public
-    - cp -r index.html css js assets public/
-  artifacts:
-    paths:
-      - public
+    - echo "▶ Validating static site…"
+    - test -f index.html || (echo "index.html missing" && exit 1)
+    - for d in css js assets; do test -d "$d" || (echo "$d/ missing" && exit 1); done
+    - grep -q "<!DOCTYPE html>" index.html || (echo "missing doctype" && exit 1)
+    - grep -q "</html>" index.html || (echo "unclosed <html>" && exit 1)
+    - echo "✓ Structure and core markup valid — site is deployable."
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH
