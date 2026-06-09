@@ -105,7 +105,13 @@
       input.addEventListener("blur", () => showError(input, validate(input)));
     });
 
-    form.addEventListener("submit", (e) => {
+    const showNote = (message) => {
+      if (!note) return;
+      note.hidden = false;
+      note.textContent = message;
+    };
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       let firstInvalid = null;
       form.querySelectorAll("input, textarea").forEach((input) => {
@@ -117,9 +123,40 @@
         firstInvalid.focus();
         return;
       }
-      // Demo: no backend wired up. Show a friendly note and reset.
-      if (note) note.hidden = false;
-      form.reset();
+
+      const fd = new FormData(form);
+      const payload = {
+        name: (fd.get("name") || "").toString().trim(),
+        email: (fd.get("email") || "").toString().trim(),
+        phone: (fd.get("phone") || "").toString().trim(),
+        message: (fd.get("message") || "").toString().trim(),
+      };
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalLabel = submitBtn ? submitBtn.textContent : "";
+
+      // Send to Firestore if the Firebase module loaded; otherwise fall back.
+      if (typeof window.sendLead === "function") {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Sending…";
+        }
+        try {
+          await window.sendLead(payload);
+          showNote("Thanks! Your message was sent — we'll be in touch within one business day.");
+          form.reset();
+        } catch (err) {
+          showNote("Sorry, something went wrong sending your message. Please email us directly at hello@cedarandstone.example.");
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalLabel;
+          }
+        }
+      } else {
+        showNote("Thanks! (Demo mode — connect a backend to receive messages.)");
+        form.reset();
+      }
     });
   }
 })();

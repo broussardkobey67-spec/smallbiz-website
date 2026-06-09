@@ -1,4 +1,8 @@
 {
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "hosting": {
     "site": "cedarstone-demo",
     "public": ".",
@@ -10,7 +14,9 @@
       "**/.*",
       "README.md",
       "LICENSE",
-      ".gitlab-ci.yml"
+      ".gitlab-ci.yml",
+      "firestore.rules",
+      "firestore.indexes.json"
     ],
     "cleanUrls": true,
     "headers": [

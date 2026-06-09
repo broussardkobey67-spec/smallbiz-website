@@ -1,0 +1,36 @@
+rules_version = '2';
+
+// Public contact-form lead capture, locked down:
+//  - Anyone can CREATE a lead, but only if every field passes validation.
+//  - Nobody can read, update, or delete via the client SDK (the site owner
+//    reads leads in the Firebase console / via the Admin SDK).
+//  - Everything outside /leads is denied.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /leads/{leadId} {
+      allow create: if
+        request.resource.data.keys().hasOnly(['name', 'email', 'phone', 'message', 'source', 'createdAt'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.name.size() <= 200
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches('^[^@]+@[^@]+[.][^@]+$')
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() <= 50
+        && request.resource.data.message is string
+        && request.resource.data.message.size() >= 1
+        && request.resource.data.message.size() <= 5000
+        && request.resource.data.source is string
+        && request.resource.data.source.size() <= 100
+        && request.resource.data.createdAt == request.time;
+
+      allow read, update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

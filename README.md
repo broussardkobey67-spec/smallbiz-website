@@ -29,8 +29,13 @@ contractor, dentist).
 - **Themeable** — the whole palette and type scale live in CSS custom properties
   at the top of `css/styles.css`; change a few variables to rebrand.
 - **Interactive, without bloat** — scroll-reveal animations, an auto-rotating
-  testimonial slider with clickable dots, and client-side form validation in
-  ~120 lines of vanilla JS.
+  testimonial slider with clickable dots, and accessible form validation in
+  vanilla JS.
+- **Real backend — leads captured in Firestore.** The contact form writes
+  straight to Cloud Firestore (no server to run), protected by tight security
+  rules (`firestore.rules`): create-only on `/leads`, every field validated,
+  and no client can read, update, or delete. Firebase is loaded lazily so an
+  early submit never misses.
 - **Deployed on Firebase Hosting** — live at
   [cedarstone-demo.web.app](https://cedarstone-demo.web.app) (config in
   `firebase.json`); a `.gitlab-ci.yml` is also included for GitLab Pages CI.
@@ -62,11 +67,21 @@ python3 -m http.server 8000     # then open http://localhost:8000
 | Project photos | swap the `.gallery-item` blocks for `<img>` tags |
 | Where the form sends | wire the submit handler in `js/main.js` to an email/CRM endpoint |
 
-## Going live
+## The contact form (Firestore backend)
 
-The contact form is front-end only by design (no secrets in a static site). To
-make it send, point it at a form service (Formspree, Basin) or your own
-endpoint, or hook it into a CRM. Everything else is production-ready.
+Submissions are written to **Cloud Firestore** from the browser via the Firebase
+web SDK (`js/firebase-form.js`) — no server to run or maintain. Security is
+enforced by `firestore.rules`:
+
+- **create-only** on the `/leads` collection — anyone can submit, nobody can read
+- every field is **validated** (types, lengths, email format, server timestamp)
+- **everything else is denied** (no read/update/delete, no other collections)
+
+The site owner reads incoming leads in the Firebase console or via the Admin SDK.
+Deploy rules + hosting with `firebase deploy`.
+
+> The Firebase web API key in the config is public by design — it only
+> identifies the project; access is governed entirely by the Firestore rules.
 
 ## License
 
