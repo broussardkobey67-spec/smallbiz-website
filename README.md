@@ -9,7 +9,7 @@ It's set up as a realistic demo for a fictional landscaping company, but it's
 really a **reusable template** for any local business (plumber, cafe, salon,
 contractor, dentist).
 
-🔗 **Live demo:** https://broussardkobey67.gitlab.io/smallbiz-website/
+🔗 **Live demo:** **https://cedarstone-demo.web.app** (hosted on Firebase)
 
 ![HTML](https://img.shields.io/badge/HTML5-semantic-orange)
 ![CSS](https://img.shields.io/badge/CSS3-responsive-blue)
@@ -31,8 +31,9 @@ contractor, dentist).
 - **Interactive, without bloat** — scroll-reveal animations, an auto-rotating
   testimonial slider with clickable dots, and client-side form validation in
   ~120 lines of vanilla JS.
-- **Auto-deploys** — a small `.gitlab-ci.yml` publishes it to GitLab Pages on
-  every push.
+- **Deployed on Firebase Hosting** — live at
+  [cedarstone-demo.web.app](https://cedarstone-demo.web.app) (config in
+  `firebase.json`); a `.gitlab-ci.yml` is also included for GitLab Pages CI.
 
 ## Sections
 

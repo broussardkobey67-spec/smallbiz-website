@@ -1,0 +1,23 @@
+{
+  "hosting": {
+    "site": "cedarstone-demo",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      ".git/**",
+      ".firebase/**",
+      "**/.*",
+      "README.md",
+      "LICENSE",
+      ".gitlab-ci.yml"
+    ],
+    "cleanUrls": true,
+    "headers": [
+      {
+        "source": "**/*.@(css|js|svg|woff2)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+      }
+    ]
+  }
+}

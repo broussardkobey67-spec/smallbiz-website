@@ -3,3 +3,6 @@
 .idea/
 public/
 node_modules/
+
+# Firebase
+.firebase/
