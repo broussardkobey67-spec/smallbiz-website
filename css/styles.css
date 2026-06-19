@@ -55,6 +55,30 @@ p { margin: 0 0 1rem; }
 }
 .skip-link:focus { left: 0; }
 
+/* ---- KDS portfolio demo frame ---- */
+.kds-demo-bar {
+  position: relative;
+  z-index: 120;
+  background: #11110f;
+  color: rgba(247, 245, 240, 0.86);
+  border-bottom: 1px solid rgba(247, 245, 240, 0.12);
+  font-size: 0.86rem;
+}
+.kds-demo-bar__inner {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.kds-demo-bar a {
+  color: #e8c78a;
+  font-weight: 700;
+}
+.kds-demo-bar__meta {
+  color: rgba(247, 245, 240, 0.62);
+}
+
 /* ---- Buttons ---- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
@@ -181,6 +205,16 @@ p { margin: 0 0 1rem; }
 .site-footer nav { display: grid; gap: .5rem; }
 .site-footer nav a:hover { color: var(--terracotta); }
 .copyright { grid-column: 1 / -1; border-top: 1px solid rgba(247,245,240,.15); padding-top: 1.2rem; margin: .5rem 0 0; font-size: .9rem; color: var(--sage); }
+.demo-note {
+  grid-column: 1 / -1;
+  margin: -0.5rem 0 0;
+  color: rgba(247, 245, 240, 0.68);
+  font-size: 0.9rem;
+}
+.demo-note a {
+  color: #e8c78a;
+  font-weight: 700;
+}
 
 /* ---- Scroll reveal ---- */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
@@ -190,6 +224,7 @@ p { margin: 0 0 1rem; }
 @media (max-width: 860px) {
   .hero-grid, .about-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
   .about-art { max-width: 280px; }
+  .kds-demo-bar__inner { align-items: flex-start; flex-direction: column; justify-content: center; padding-block: .6rem; gap: .15rem; }
   .nav-toggle { display: flex; }
   .nav-menu {
     position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch;
