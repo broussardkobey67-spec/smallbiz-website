@@ -83,6 +83,15 @@ Deploy rules + hosting with `firebase deploy`.
 > The Firebase web API key in the config is public by design — it only
 > identifies the project; access is governed entirely by the Firestore rules.
 
+## Public Proof Context
+
+Built by Kobey Dev Services as a local-business website and lead-capture demo.
+
+- Portfolio: https://kobeydev.com
+- Live demo: https://cedarstone-demo.web.app
+- GitHub org: https://github.com/git-agent-swarm
+- Google Developer profile: https://me.developers.google.com/u/116492041557080639666
+
 ## License
 
 MIT © Kobey Broussard — free to use and adapt for client work.
